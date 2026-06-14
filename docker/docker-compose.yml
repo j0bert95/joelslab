@@ -1,0 +1,28 @@
+services:
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  hello-world:
+    image: nginx
+    container_name: hello-world
+    ports:
+      - "8072:80"
+    volumes:
+      - ./hello-world-site:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  uptime-kuma-data:
