@@ -1,20 +1,21 @@
 #!/bin/bash
+set -euxo pipefail
 
-dnf update -y
+exec > >(tee /var/log/joelslab-startup.log) 2>&1
 
-dnf install -y git docker
+dnf install -y dnf-plugins-core git curl
 
-systemctl enable docker
-systemctl start docker
+dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
 
-curl -L \
-https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 \
--o /usr/local/bin/docker-compose
+dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-chmod +x /usr/local/bin/docker-compose
+systemctl enable --now docker
 
-git clone https://github.com/j0bert95/joelslab /opt/lab
+rm -rf /opt/lab
+git clone https://github.com/j0bert95/joelslab.git /opt/lab
 
 cd /opt/lab/docker
 
 docker compose up -d
+
+docker ps

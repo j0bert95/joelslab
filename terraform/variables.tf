@@ -11,3 +11,9 @@ variable "zone" {
   type    = string
   default = "us-east1-b"
 }
+
+variable "subnet_cidr" {
+  type        = string
+  description = "CIDR range for the subad1 subnet."
+  default     = "10.10.1.0/24"
+}

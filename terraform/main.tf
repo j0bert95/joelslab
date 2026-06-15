@@ -15,16 +15,31 @@ provider "google" {
   zone    = var.zone
 }
 
+resource "google_compute_network" "myvcn" {
+  name                    = "myvcn"
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "subad1" {
+  name          = "subad1"
+  ip_cidr_range = var.subnet_cidr
+  region        = var.region
+  network       = google_compute_network.myvcn.id
+}
+
 resource "google_compute_firewall" "lab_allow_web" {
   name    = "terraform-lab-allow-web"
-  network = "default"
+  network = google_compute_network.myvcn.name
 
   allow {
     protocol = "tcp"
     ports = [
       "22",
       "80",
-      "443"
+      "443",
+      "8080",
+      "8072",
+      "3001"
     ]
   }
 
@@ -52,10 +67,10 @@ resource "google_compute_instance" "lab_vm" {
   }
 
   network_interface {
-    network = "default"
+    network    = google_compute_network.myvcn.id
+    subnetwork = google_compute_subnetwork.subad1.id
 
-    access_config {
-    }
+    access_config {}
   }
 
   metadata = {
@@ -75,6 +90,22 @@ output "vm_public_ip" {
   value = google_compute_instance.lab_vm.network_interface[0].access_config[0].nat_ip
 }
 
+output "vm_private_ip" {
+  value = google_compute_instance.lab_vm.network_interface[0].network_ip
+}
+
 output "ssh_command" {
   value = "gcloud compute ssh ${google_compute_instance.lab_vm.name} --zone=${var.zone}"
+}
+
+output "vpc_name" {
+  value = google_compute_network.myvcn.name
+}
+
+output "subnet_name" {
+  value = google_compute_subnetwork.subad1.name
+}
+
+output "subnet_cidr" {
+  value = google_compute_subnetwork.subad1.ip_cidr_range
 }
