@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 set -euxo pipefail
 
 exec > >(tee /var/log/joelslab-startup.log) 2>&1
@@ -14,8 +14,26 @@ systemctl enable --now docker
 rm -rf /opt/lab
 git clone https://github.com/j0bert95/joelslab.git /opt/lab
 
-cd /opt/lab/docker
+cat > /etc/systemd/system/joelslab-compose.service <<'EOF'
+[Unit]
+Description=Joel's Docker Compose Lab
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
 
-docker compose up -d
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/lab/docker
+ExecStart=/usr/bin/docker compose up -d
+ExecStop=/usr/bin/docker compose down
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable joelslab-compose.service
+systemctl start joelslab-compose.service
 
 docker ps
