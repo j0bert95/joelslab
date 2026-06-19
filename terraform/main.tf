@@ -34,7 +34,6 @@ resource "google_compute_firewall" "lab_allow_web" {
   allow {
     protocol = "tcp"
     ports = [
-      "22",
       "80",
       "443",
       "8080",
@@ -44,6 +43,24 @@ resource "google_compute_firewall" "lab_allow_web" {
   }
 
   source_ranges = ["0.0.0.0/0"]
+
+  target_tags = [
+    "terraform-lab"
+  ]
+}
+
+resource "google_compute_firewall" "allow_ssh" {
+  name    = "terraform-lab-allow-ssh"
+  network = google_compute_network.myvcn.name
+
+  allow {
+    protocol = "tcp"
+    ports = [
+      "22"
+    ]
+  }
+
+  source_ranges = ["108.214.44.158/32"]
 
   target_tags = [
     "terraform-lab"
@@ -77,7 +94,7 @@ resource "google_compute_instance" "lab_vm" {
     enable-oslogin = "TRUE"
   }
 
-  metadata_startup_script = file("${path.module}/../bootstrap/startup.sh")
+  metadata_startup_script = file("../bootstrap/startup.sh")
 
   service_account {
     scopes = [

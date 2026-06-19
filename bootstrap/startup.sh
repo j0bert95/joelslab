@@ -1,7 +1,4 @@
 #!/usr/bin/bash
-set -euxo pipefail
-
-exec > >(tee /var/log/joelslab-startup.log) 2>&1
 
 dnf install -y dnf-plugins-core git curl
 
