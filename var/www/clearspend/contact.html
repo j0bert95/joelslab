@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact ClearSpend to discuss cloud cost optimization for your organization.">
+  <title>Contact Us | ClearSpend</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="ClearSpend home"><span class="brand-mark">C</span><span>ClearSpend</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a class="active" href="contact.html">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero compact">
+      <div class="container narrow">
+        <p class="eyebrow">Contact ClearSpend</p>
+        <h1>Tell us where cloud costs are getting in the way.</h1>
+        <p class="page-lead">
+          Share a little about your environment, current priorities, and the type of support you are looking for.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid">
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/mzdlbnkd" method="POST">
+	<input type="hidden" name="_subject" value="New ClearSpend website inquiry">
+          <div class="form-row">
+            <label>
+              Name
+              <input type="text" id="name" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              Work email
+              <input type="email" id="email" name="email" autocomplete="email" required>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>
+              Company
+              <input type="text" id="company" name="company" autocomplete="organization">
+            </label>
+            <label>
+              Preferred cloud platform
+              <select id="platform" name="platform">
+                <option value="">Select one</option>
+                <option>Oracle Cloud Infrastructure (OCI)</option>
+                <option>Google Cloud Platform (GCP)</option>
+                <option>Amazon Web Services (AWS)</option>
+                <option>Multi-cloud</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            What would you like help with?
+            <textarea id="message" name="message" rows="7" required placeholder="For example: We need a clear assessment of our current cloud spend and a prioritized list of feasible savings opportunities."></textarea>
+          </label>
+
+          <button class="button button-primary" type="submit">Send Inquiry</button>
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </form>
+
+        <aside class="contact-aside">
+          <p class="eyebrow">What happens next</p>
+          <h2>A focused, no-pressure conversation.</h2>
+          <ol class="number-list">
+            <li>We review your note and learn the basics of your cloud environment.</li>
+            <li>We schedule a discovery conversation to understand your goals and constraints.</li>
+            <li>We determine whether a ClearSpend assessment is the right next step.</li>
+          </ol>
+          <p class="small-text">Please do not include passwords, credentials, account IDs, billing exports, or other sensitive information in this form.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <div>
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark">C</span><span>ClearSpend</span></a>
+        <p>Cloud cost optimization with operational reality in mind.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">© <span id="year"></span> ClearSpend. All rights reserved.</div>
+  </footer>
+  <script src="js/site.js"></script>
+</body>
+</html>
