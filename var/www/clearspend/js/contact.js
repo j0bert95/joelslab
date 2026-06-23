@@ -3,7 +3,7 @@
   Replace hello@clearspend.example with your actual business email address.
   This static-site version opens the visitor's default email app with the inquiry pre-filled.
 */
-const DESTINATION_EMAIL = "joelrsnider95@gmail.com";
+const DESTINATION_EMAIL = "*@gmail.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contact-form");
